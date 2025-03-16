@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oneCode Admin - Table</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/favicon_admin.ico') }}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <style>
+        body {
+            padding: 10vh 20vw;
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <a href="/admin">Главная</a>
+    <a href="/make_all_spectator">Перевести всех в наблюдателя</a>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Status</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            <td><a href="/admin/user/{{ row[0] }}">{{ row[0] }}</a></td>
+            {% if row[1] == 0 %}
+                <td><a href="/make_editor/{{ row[0] }}?fr=/admin/users_table" style="padding: 2px 7px; border-radius: 10px; background-color: #ffbb002d; color: #ffbb00; width: max-content;">spectator</a></td>
+            {% elif row[1] == 1 %}
+                <td><a href="/ban/{{ row[0] }}?fr=/admin/users_table" style="padding: 2px 7px; border-radius: 10px; background-color: #00ff002d; color: #00ff00; width: max-content;">editor</a></td>
+            {% elif row[1] == 2 %}
+                <td><a href="/unban/{{ row[0] }}?fr=/admin/users_table" style="padding: 2px 7px; border-radius: 10px; background-color: #ff00002d; color: #ff0000; width: max-content;">banned</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
